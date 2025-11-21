@@ -1,3 +1,10 @@
+# ============================================================================
+# FICHIER : variables.tf
+# DESCRIPTION : Déclaration des variables globales du projet
+# ============================================================================
+
+[Insérez ici le contenu complet de votre fichier variables.tf]
+
 # variables.tf - Configuration flexible
 variable "environment" {
   description = "Environnement de déploiement"

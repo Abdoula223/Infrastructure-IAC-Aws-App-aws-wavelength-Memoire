@@ -1,5 +1,3 @@
-# main_app_module.tf - VERSION 20/20
-
 # --- ALB DAKAR MANQUANT - AJOUT ---
 resource "aws_lb" "alb_dakar" {
   name               = "alb-dakar-wz"
