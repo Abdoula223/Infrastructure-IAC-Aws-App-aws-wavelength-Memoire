@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthèse Architecture Cloud Hybride AWS</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome (Webfont only, no SVG) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Nouvelle couleur de fond pour un meilleur contraste */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b172a; /* Deep Dark Blue-Gray */
+            color: #f8fafc; /* Slate 50 */
+        }
+        
+        /* Vibrant Palette Variables */
+        :root {
+            --color-primary: #3b82f6; /* Blue 500 */
+            --color-secondary: #a78bfa; /* Violet 400 */
+            --color-accent: #f59e0b; /* Amber 500 */
+            --color-success: #10b981; /* Emerald 500 */
+            --color-danger: #ef4444; /* Red 500 */
+            --bg-card: #1f2a3a; /* Darker Slate */
+        }
+
+        .gradient-text {
+            /* Adjusted gradient for better impact */
+            background: linear-gradient(to right, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+    <!-- PALETTE CHOSEN: Vibrant Cyber (Blue, Violet, Amber) based on Tech/Cloud theme -->
+    <!-- SOURCE MATERIAL: synthese_executive_memoire.md -->
+    <!-- CONSTRAINTS: NO SVG, NO MERMAID, Single File -->
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- HEADER -->
+    <header class="w-full bg-slate-900 border-b border-slate-700 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div>
+                <!-- Titre mis à jour selon la demande -->
+                <h1 class="text-2xl font-bold tracking-tight text-white">
+                    <span class="text-blue-400">ARCHITECTURE CLOUD</span> SCALABLE ET SÉCURISÉE
+                </h1>
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Rapport du Mémoire - AWS Hybride Paris/Dakar</p>
+            </div>
+            <div class="hidden md:flex space-x-4 text-sm font-semibold text-slate-300">
+                <a href="#contexte" class="hover:text-blue-400 transition">Contexte</a>
+                <a href="#architecture" class="hover:text-blue-400 transition">Architecture</a>
+                <a href="#performance" class="hover:text-blue-400 transition">Performance</a>
+                <a href="#calibration" class="hover:text-blue-400 transition">Résultats</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- HERO SECTION: Contient la conclusion formelle du mémoire -->
+        <section class="text-center space-y-6">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white">
+                Résoudre l'équation : <span class="gradient-text">Cloud & Performance Locale</span>
+            </h2>
+            <p class="max-w-4xl mx-auto text-lg text-slate-300 leading-relaxed italic">
+                La présente étude s'est attachée à résoudre une équation complexe : comment garantir les standards internationaux de haute disponibilité et de sécurité propres au Cloud Computing, tout en s'affranchissant des contraintes structurelles de latence inhérentes à la connectivité en Afrique de l'Ouest.
+            </p>
+            <p class="max-w-4xl mx-auto text-md text-blue-300 font-semibold">
+                La réponse architecturale apportée (hybridation innovante entre la région AWS Paris pour la résilience systémique et la zone AWS Wavelength à Dakar pour la performance à l'Edge) constitue un changement de paradigme pour le déploiement d'applications critiques dans la sous-région UEMOA.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+                <div class="bg-violet-900/20 p-6 rounded-xl border border-violet-700 shadow-lg transform hover:-translate-y-1 transition duration-300">
+                    <div class="text-amber-400 text-3xl font-bold mb-2">< 10 ms</div>
+                    <div class="text-slate-400 text-sm font-medium uppercase">Latence Cible (Boucle Locale)</div>
+                </div>
+                <div class="bg-violet-900/20 p-6 rounded-xl border border-violet-700 shadow-lg transform hover:-translate-y-1 transition duration-300">
+                    <div class="text-blue-400 text-3xl font-bold mb-2">95%</div>
+                    <div class="text-slate-400 text-sm font-medium uppercase">Réduction de Latence Observée</div>
+                </div>
+                <div class="bg-violet-900/20 p-6 rounded-xl border border-violet-700 shadow-lg transform hover:-translate-y-1 transition duration-300">
+                    <div class="text-emerald-400 text-3xl font-bold mb-2">8/8</div>
+                    <div class="text-slate-400 text-sm font-medium uppercase">Objectifs Techniques Atteints/Validés</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: CONTEXTE (LATENCY WALL) -->
+        <section id="contexte" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/30">
+                    <i class="fa-solid fa-globe text-white text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Le Défi : L'Éloignement Géographique</h3>
+                    <p class="text-slate-300">
+                        La problématique initiale était de concilier la résilience des Clouds internationaux avec l'exigence de performance temps réel local. L'éloignement géographique génère une latence réseau incompressible (>150ms) qui est un obstacle à la digitalisation des services critiques UEMOA.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- VIZ 1: Latence Comparison -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-xl">
+                    <h4 class="text-lg font-semibold text-white mb-4 border-l-4 border-amber-500 pl-3">Comparatif de Latence (ms)</h4>
+                    <p class="text-sm text-slate-400 mb-6">
+                        L'architecture hybride permet de contourner le transit internet international. L'Edge Computing à Dakar réduit la latence de plus de 95% par rapport au transit standard vers Paris.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="latencyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- VIZ 2: Gauge Indicator -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-xl flex flex-col">
+                    <h4 class="text-lg font-semibold text-white mb-4 border-l-4 border-blue-500 pl-3">Gain de Performance</h4>
+                    <p class="text-sm text-slate-400 mb-2">
+                        Impact direct sur l'expérience utilisateur et la réactivité des applications transactionnelles.
+                    </p>
+                    <div id="performanceGauge" class="w-full h-full min-h-[300px]"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: ARCHITECTURE DIAGRAM (HTML/CSS) -->
+        <section id="architecture" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                <div class="w-12 h-12 bg-violet-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-violet-500/30">
+                    <i class="fa-solid fa-network-wired text-white text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">La Solution : Architecture "Core & Edge"</h3>
+                    <p class="text-slate-300">
+                        Le "Core" à Paris assure la persistance et la résilience (Multi-AZ), tandis que l'"Edge" à Dakar traite le trafic au plus près de l'utilisateur (Wavelength) pour garantir la latence ultra-faible.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Custom HTML Architecture Diagram -->
+            <div class="bg-slate-800 rounded-xl p-8 border border-slate-700 shadow-2xl overflow-hidden relative">
+                <!-- Background Grid Effect -->
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#64748b 1px, transparent 1px); background-size: 20px 20px;"></div>
+                
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-5 gap-4">
+                    
+                    <!-- DAKAR ZONE (EDGE) -->
+                    <div class="md:col-span-2 border-2 border-amber-500/50 bg-amber-900/10 rounded-xl p-4 flex flex-col">
+                        <div class="flex items-center gap-2 mb-4 border-b border-amber-500/30 pb-2">
+                            <i class="fa-solid fa-tower-cell text-amber-500"></i>
+                            <span class="font-bold text-amber-100">ZONE WAVELENGTH DAKAR</span>
+                        </div>
+                        <div class="flex-grow space-y-3">
+                            <div class="bg-slate-900 p-3 rounded border border-slate-600">
+                                <div class="text-xs text-slate-400">Calcul (Edge)</div>
+                                <div class="font-bold text-white"><i class="fa-solid fa-server mr-2 text-amber-500"></i>EC2 Instances & ASG</div>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-600">
+                                <div class="text-xs text-slate-400">Réseau</div>
+                                <div class="font-bold text-white"><i class="fa-solid fa-route mr-2 text-amber-500"></i>Carrier Gateway & Route 53</div>
+                            </div>
+                            <div class="bg-blue-900/40 p-3 rounded border border-blue-500/30 mt-4">
+                                <div class="text-xs text-blue-300">Conformité</div>
+                                <div class="font-bold text-white text-sm">Souveraineté des Données (Loi CDP)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONNECTION -->
+                    <div class="md:col-span-1 flex flex-col justify-center items-center py-4 md:py-0">
+                        <div class="h-1 w-full bg-slate-600 relative">
+                            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-slate-900 px-2 text-xs text-slate-400 whitespace-nowrap border border-slate-700 rounded-full">
+                                Tunnel Chiffré Inter-Région
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right-arrow-left text-slate-500 mt-2"></i>
+                    </div>
+
+                    <!-- PARIS REGION (CORE) -->
+                    <div class="md:col-span-2 border-2 border-blue-500/50 bg-blue-900/10 rounded-xl p-4 flex flex-col">
+                        <div class="flex items-center gap-2 mb-4 border-b border-blue-500/30 pb-2">
+                            <i class="fa-solid fa-cloud text-blue-500"></i>
+                            <span class="font-bold text-blue-100">RÉGION PARIS (eu-west-3)</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 mb-3">
+                            <div class="bg-slate-700/50 text-center text-xs py-1 rounded text-slate-300">AZ 1</div>
+                            <div class="bg-slate-700/50 text-center text-xs py-1 rounded text-slate-300">AZ 2</div>
+                            <div class="bg-slate-700/50 text-center text-xs py-1 rounded text-slate-300">AZ 3</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-slate-900 p-3 rounded border border-slate-600">
+                                <div class="text-xs text-slate-400">Persistance (IaC)</div>
+                                <div class="font-bold text-white"><i class="fa-solid fa-database mr-2 text-blue-500"></i>RDS PostgreSQL (Multi-AZ)</div>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-600">
+                                <div class="text-xs text-slate-400">Cache (IaC)</div>
+                                <div class="font-bold text-white"><i class="fa-solid fa-bolt mr-2 text-red-500"></i>ElastiCache Redis</div>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-600">
+                                <div class="text-xs text-slate-400">Gestion / Qualité</div>
+                                <div class="font-bold text-white"><i class="fa-solid fa-gears mr-2 text-slate-400"></i>CodePipeline / SonarCloud</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: PERFORMANCE & SCALABILITY -->
+        <section id="performance" class="scroll-mt-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Text Content -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                            <i class="fa-solid fa-chart-line text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Scalabilité Horizontale & IaC</h3>
+                    </div>
+                    <p class="text-slate-300">
+                        La scalabilité est assurée par l'élasticité dynamique des Auto Scaling Groups (ASG), permettant au système d'absorber les pics de charge (jusqu'à 150 RPS) en temps réel. Cette approche optimise les coûts (modèle OPEX) et assure une haute disponibilité.
+                    </p>
+                    <p class="text-slate-400 text-sm">
+                        L'approche **Infrastructure as Code (IaC)** via Terraform garantit la reproductibilité, l'auditabilité et la gestion complète du cycle de vie de l'infrastructure hybride, des VPC aux groupes de sécurité, y compris les modèles de persistance (RDS) et de cache (Redis).
+                    </p>
+                    
+                    <!-- VIZ 3: Terraform Resources -->
+                    <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 shadow-xl mt-6">
+                        <h4 class="text-md font-semibold text-white mb-2 text-center">Distribution des 29 Ressources Terraform</h4>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="resourceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIZ 4: Auto Scaling Simulation -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-xl">
+                    <h4 class="text-lg font-semibold text-white mb-4 border-l-4 border-emerald-500 pl-3">Simulation Auto Scaling (Edge Dakar)</h4>
+                    <p class="text-sm text-slate-400 mb-6">
+                        Le système réagit à l'augmentation de la charge (RPS) en ajustant le nombre d'instances actives (step=1) pour maintenir la performance et l'utilisation CPU à un niveau optimal.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="scalingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: SECURITY & DEFENSE IN DEPTH -->
+        <section class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-red-500/30">
+                    <i class="fa-solid fa-shield-halved text-white text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Sécurité : Défense en Profondeur et Souveraineté</h3>
+                    <p class="text-slate-300">
+                        Le modèle "Zero Trust" implémente une segmentation réseau stricte et un chiffrement intégral (KMS). L'utilisation de Wavelength à Dakar permet de traiter les données sensibles localement, assurant la conformité avec la Loi sénégalaise sur la protection des données (CDP).
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- VIZ 5: Security Radar -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-xl">
+                    <h4 class="text-lg font-semibold text-white mb-4 border-l-4 border-red-500 pl-3">Posture de Sécurité Comparée (Cloud vs. On-Premise)</h4>
+                    <p class="text-sm text-slate-400 mb-6">
+                        Le Cloud (cible) améliore significativement la posture de sécurité sur des axes critiques comme la résilience, la segmentation et le contrôle d'accès (IAM).
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="securityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Security Details Cards -->
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="bg-slate-800/50 p-4 rounded-lg border-l-4 border-blue-500">
+                        <h5 class="text-white font-bold text-sm mb-1"><i class="fa-solid fa-network-wired mr-2 text-blue-500"></i>Segmentation Réseau</h5>
+                        <p class="text-xs text-slate-400">Architecture 3-tiers (Public/App/Data). NACLs stateless au niveau sous-réseau + Security Groups stateful au niveau instance.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-4 rounded-lg border-l-4 border-amber-500">
+                        <h5 class="text-white font-bold text-sm mb-1"><i class="fa-solid fa-passport mr-2 text-amber-500"></i>Conformité CDP</h5>
+                        <p class="text-xs text-slate-400">Le traitement des données est localisé à Dakar (Wavelength), répondant aux exigences de souveraineté de la Loi 2008-12.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-4 rounded-lg border-l-4 border-violet-500">
+                        <h5 class="text-white font-bold text-sm mb-1"><i class="fa-solid fa-key mr-2 text-violet-500"></i>Chiffrement Intégral</h5>
+                        <p class="text-xs text-slate-400">Chiffrement au repos (KMS AES-256) pour EBS/RDS et en transit (TLS 1.3) pour tous les flux. Sécurité by design.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: CALIBRATION & RESULTS -->
+        <section id="calibration" class="scroll-mt-24">
+             <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                <div class="w-12 h-12 bg-slate-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-white/10">
+                    <i class="fa-solid fa-clipboard-check text-white text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Matrice de Calibration des Objectifs (8/8 Objectifs validés)</h3>
+                    <p class="text-slate-300">
+                        Analyse transparente des objectifs atteints et justification des limitations liées au cadre académique expérimental.
+                    </p>
+                </div>
+            </div>
+
+            <!-- VIZ 6: Project Status (MIS À JOUR AVEC 8 POINTS) -->
+            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-xl">
+                <h4 class="text-lg font-semibold text-white mb-4 border-l-4 border-slate-400 pl-3">Taux de Maîtrise par Objectif Technique</h4>
+                <div class="chart-container" style="height: 400px;">
+                    <canvas id="statusChart"></canvas>
+                </div>
+                <div class="mt-4 p-3 bg-amber-900/20 border border-amber-700/50 rounded text-xs text-amber-200">
+                    <i class="fa-solid fa-circle-info mr-2"></i>
+                    <strong>Note sur la Persistance (RDS & Redis) :</strong> Ces objectifs sont marqués **"Validé (IaC)"** (85%). Cela signifie que l'intégralité de leur conception et de leur code (Terraform, Annexe B et C) est achevée et conforme aux standards de production. Le non-provisionnement effectif est une contrainte administrative (politiques `AccessDenied` du Sandbox) et non une lacune de conception.
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER: Mise à jour avec les perspectives stratégiques -->
+        <footer class="text-center pt-10 border-t border-slate-800 mt-10">
+            <h4 class="text-2xl font-bold text-white mb-4">Feuille de Route et Perspectives Stratégiques (Phase "Day-2")</h4>
+            <p class="max-w-4xl mx-auto text-slate-400 text-sm mb-6">
+                L'infrastructure livrée est un socle robuste, conçu pour évoluer. Ce projet ne se limite pas à un exercice académique ; il propose un modèle de référence industriel (Blueprint) pour les entreprises ouest-africaines.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+                <div class="p-6 bg-slate-800 rounded-xl border border-slate-700 shadow-xl">
+                    <i class="fa-solid fa-cubes text-4xl text-blue-500 mb-3"></i>
+                    <h5 class="text-white font-semibold mb-2">Perspective 1 : Cloud-Native (EKS)</h5>
+                    <p class="text-xs text-slate-500 mt-2">Transition des EC2 vers Amazon EKS (Conteneurisation) pour une granularité et une scalabilité à la seconde des microservices.</p>
+                </div>
+                <div class="p-6 bg-slate-800 rounded-xl border border-slate-700 shadow-xl">
+                    <i class="fa-solid fa-layer-group text-4xl text-emerald-500 mb-3"></i>
+                    <h5 class="text-white font-semibold mb-2">Perspective 2 : Maillage Edge Continental</h5>
+                    <p class="text-xs text-slate-500 mt-2">Réplication du modèle architectural sur les zones Wavelength de Lagos et Nairobi pour une expérience utilisateur homogène à l'échelle panafricaine.</p>
+                </div>
+                <div class="p-6 bg-slate-800 rounded-xl border border-slate-700 shadow-xl">
+                    <i class="fa-solid fa-microchip text-4xl text-violet-500 mb-3"></i>
+                    <h5 class="text-white font-semibold mb-2">Perspective 3 : Sécurité Cognitive (GuardDuty)</h5>
+                    <p class="text-xs text-slate-500 mt-2">Intégration d'Amazon GuardDuty et AWS Detective pour passer d'une posture défensive à une posture de sécurité prédictive.</p>
+                </div>
+            </div>
+            <p class="text-slate-600 text-sm pb-4">© 2025 Abdoulaye DIALLO - Master Professionnel Virtualisation et Cloud Computing</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- HELPER: Label Splitting Logic (16 chars) ---
+        function splitLabel(str, maxLen = 16) {
+            if (str.length <= maxLen) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxLen) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- HELPER: Tooltip Callback (MANDATORY) ---
+        const commonTooltip = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // --- CHART 1: Latency Comparison (Bar) ---
+        const ctxLatency = document.getElementById('latencyChart').getContext('2d');
+        new Chart(ctxLatency, {
+            type: 'bar',
+            data: {
+                labels: [
+                    splitLabel("Transit Internet (Paris)"), 
+                    splitLabel("Boucle Locale (Dakar Wavelength)")
+                ],
+                datasets: [{
+                    label: 'Latence (ms)',
+                    data: [200, 8],
+                    backgroundColor: ['#3b82f6', '#f59e0b'],
+                    borderRadius: 6,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltip
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        ticks: { color: '#cbd5e1' }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 2: Plotly Gauge (Latency Reduction) ---
+        var gaugeData = [
+            {
+                type: "indicator",
+                mode: "gauge+number+delta",
+                value: 96,
+                title: { text: "Réduction Latence", font: { size: 18, color: "white" } },
+                delta: { reference: 0, increasing: { color: "#10b981" } },
+                number: { suffix: "%", font: { color: "#10b981" } },
+                gauge: {
+                    axis: { range: [null, 100], tickwidth: 1, tickcolor: "white" },
+                    bar: { color: "#10b981" },
+                    bgcolor: "#1e293b",
+                    borderwidth: 2,
+                    bordercolor: "#334155",
+                    steps: [
+                        { range: [0, 50], color: "#334155" },
+                        { range: [50, 80], color: "#475569" }
+                    ]
+                }
+            }
+        ];
+        var gaugeLayout = {
+            width: 300, height: 250,
+            margin: { t: 25, b: 25, l: 25, r: 25 },
+            paper_bgcolor: "rgba(0,0,0,0)",
+            font: { color: "white", family: "Inter" }
+        };
+        Plotly.newPlot('performanceGauge', gaugeData, gaugeLayout, {displayModeBar: false});
+
+        // --- CHART 3: Resource Distribution (Doughnut) ---
+        const ctxResource = document.getElementById('resourceChart').getContext('2d');
+        new Chart(ctxResource, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    splitLabel("Réseau & VPC"), 
+                    splitLabel("Sécurité (SG/NACL)"), 
+                    splitLabel("Compute (EC2/ASG)"), 
+                    splitLabel("Persistance/Cache (IaC)"),
+                    splitLabel("DevOps (CI/CD)")
+                ],
+                datasets: [{
+                    data: [10, 8, 6, 3, 2], // 29 Total (adjusting breakdown for new RDS/Redis classification)
+                    backgroundColor: ['#3b82f6', '#ef4444', '#f59e0b', '#a78bfa', '#10b981'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#cbd5e1', font: {size: 10} } },
+                    tooltip: commonTooltip
+                },
+                cutout: '70%'
+            }
+        });
+
+        // --- CHART 4: Scaling Simulation (Line) ---
+        const ctxScaling = document.getElementById('scalingChart').getContext('2d');
+        new Chart(ctxScaling, {
+            type: 'line',
+            data: {
+                labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'],
+                datasets: [
+                    {
+                        label: 'Charge Trafic (RPS)',
+                        data: [20, 45, 150, 140, 80, 50, 30],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        yAxisID: 'y',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Instances Actives',
+                        data: [1, 2, 5, 5, 3, 2, 1],
+                        borderColor: '#10b981',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        fill: false,
+                        yAxisID: 'y1',
+                        step: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } },
+                    tooltip: commonTooltip
+                },
+                scales: {
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+                    y: { 
+                        type: 'linear', display: true, position: 'left', 
+                        ticks: { color: '#3b82f6' }, grid: { color: '#334155' } 
+                    },
+                    y1: { 
+                        type: 'linear', display: true, position: 'right', 
+                        ticks: { color: '#10b981', stepSize: 1 }, grid: { display: false } 
+                    }
+                }
+            }
+        });
+
+        // --- CHART 5: Security Radar ---
+        const ctxSecurity = document.getElementById('securityChart').getContext('2d');
+        new Chart(ctxSecurity, {
+            type: 'radar',
+            data: {
+                labels: ['Segmentation', 'Chiffrement', 'Identité (IAM)', 'Monitoring', 'Résilience (AZ)'],
+                datasets: [
+                    {
+                        label: 'On-Premise (Existant)',
+                        data: [2, 1, 2, 2, 1],
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    },
+                    {
+                        label: 'Architecture AWS (Cible)',
+                        data: [5, 5, 5, 4, 5],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } },
+                    tooltip: commonTooltip
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: '#475569' },
+                        grid: { color: '#334155' },
+                        pointLabels: { color: '#cbd5e1', font: { size: 11 } },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 6: Project Status (Horizontal Bar) - MIS À JOUR (8 POINTS) ---
+        const statusLabels = [
+            "1. Résilience Réseau MultiAZ",
+            "2. Défense en Profondeur",
+            "3. Scalabilité Horizontale",
+            "4. Latence Ultra-Faible (Edge)",
+            "5. Chaîne CI/CD Automatisée",
+            "6. Monitoring Unifié",
+            "7. Base de Données (RDS)",
+            "8. Cache Applicatif (Redis)"
+        ];
+
+        const ctxStatus = document.getElementById('statusChart').getContext('2d');
+        new Chart(ctxStatus, {
+            type: 'bar',
+            data: {
+                labels: statusLabels.map(label => splitLabel(label)),
+                datasets: [{
+                    label: 'Taux de Complétion (%)',
+                    // 100% pour les 6 premiers (Maîtrisé), 85% pour les 2 derniers (Validé IaC)
+                    data: [100, 100, 100, 100, 100, 100, 85, 85], 
+                    backgroundColor: [
+                        '#10b981', '#10b981', '#10b981', '#10b981', '#10b981', '#10b981',
+                        '#f59e0b', '#f59e0b' 
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltip
+                },
+                scales: {
+                    x: {
+                        min: 0, max: 100,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: {
+                        ticks: { color: '#cbd5e1' }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
